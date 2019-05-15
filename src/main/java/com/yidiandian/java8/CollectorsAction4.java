@@ -18,10 +18,10 @@ public class CollectorsAction4 {
             new Dish("salmon", false, 450, Dish.Type.FISH));
 
     public static void main(String[] args) {
-        testSummingDouble();
+        /*testSummingDouble();
         testSummingLong();
         testSummingInt();
-        testToCollection();
+        testToCollection();*/
         testToConcurrentMap();
         testToConcurrentMapWithBinaryOperator();
         testToConcurrentMapWithBinaryOperatorAndSupplier();
@@ -35,7 +35,7 @@ public class CollectorsAction4 {
     }
 
 
-    private static void testSummingDouble() {
+/*    private static void testSummingDouble() {
         System.out.println("testSummingDouble");
         Optional.of(menu.stream().collect(Collectors.summingDouble(Dish::getCalories)))
                 .ifPresent(System.out::println);
@@ -60,16 +60,16 @@ public class CollectorsAction4 {
         System.out.println("testToCollection");
         Optional.of(menu.stream().filter(d -> d.getCalories() > 600).collect(Collectors.toCollection(LinkedList::new)))
                 .ifPresent(System.out::println);
-    }
+    }*/
 
     private static void testToConcurrentMap() {
         System.out.println("testToConcurrentMap");
-        Optional.of(menu.stream()
+       /* Optional.of(menu.stream()
                 .collect(Collectors.toConcurrentMap(Dish::getName, Dish::getCalories)))
                 .ifPresent(v -> {
                     System.out.println(v);
                     System.out.println(v.getClass());
-                });
+                });*/
     }
 
     /**
@@ -77,12 +77,12 @@ public class CollectorsAction4 {
      */
     private static void testToConcurrentMapWithBinaryOperator() {
         System.out.println("testToConcurrentMapWithBinaryOperator");
-        Optional.of(menu.stream()
+       /* Optional.of(menu.stream()
                 .collect(Collectors.toConcurrentMap(Dish::getType, v -> 1L, (a, b) -> a + b)))
                 .ifPresent(v -> {
                     System.out.println(v);
                     System.out.println(v.getClass());
-                });
+                });*/
     }
 
     /**
@@ -92,34 +92,34 @@ public class CollectorsAction4 {
         Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
 
         System.out.println("testToConcurrentMapWithBinaryOperatorAndSupplier");
-        Optional.of(menu.stream()
+       /* Optional.of(menu.stream()
                 .collect(Collectors.toConcurrentMap(Dish::getType, v -> 1L, (a, b) -> a + b, ConcurrentSkipListMap::new)))
                 .ifPresent(v -> {
                     System.out.println(v);
                     System.out.println(v.getClass());
-                });
+                });*/
     }
 
     private static void testToList() {
-        Optional.of(menu.stream().filter(Dish::isVegetarian).collect(Collectors.toList()))
+       /* Optional.of(menu.stream().filter(Dish::isVegetarian).collect(Collectors.toList()))
                 .ifPresent(r -> {
                     System.out.println(r.getClass());
                     System.out.println(r);
-                });
+                });*/
     }
 
     private static void testToSet() {
-        Optional.of(menu.stream().filter(Dish::isVegetarian).collect(Collectors.toSet()))
+      /*  Optional.of(menu.stream().filter(Dish::isVegetarian).collect(Collectors.toSet()))
                 .ifPresent(r -> {
                     System.out.println(r.getClass());
                     System.out.println(r);
-                });
+                });*/
     }
 
 
     private static void testToMap() {
         System.out.println("testToMap");
-        Optional.of(menu.stream().collect(
+      /*  Optional.of(menu.stream().collect(
                 Collectors.collectingAndThen(
                         Collectors.toMap(Dish::getName, Dish::getCalories),
                         Collections::synchronizedMap))
@@ -127,7 +127,7 @@ public class CollectorsAction4 {
                 .ifPresent(v -> {
                     System.out.println(v);
                     System.out.println(v.getClass());
-                });
+                });*/
 
         Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
         for (Map.Entry<Thread, StackTraceElement[]> entry : allStackTraces.entrySet()) {
@@ -152,7 +152,7 @@ public class CollectorsAction4 {
     /**
      * Type:Total
      */
-    private static void testToMapWithBinaryOperator() {
+ /*   private static void testToMapWithBinaryOperator() {
         System.out.println("testToMapWithBinaryOperator");
         Optional.of(menu.stream()
                 .collect(Collectors.toMap(Dish::getType, v -> 1L, (a, b) -> a + b)))
@@ -160,12 +160,12 @@ public class CollectorsAction4 {
                     System.out.println(v);
                     System.out.println(v.getClass());
                 });
-    }
+    }*/
 
     /**
      * Type:Total
      */
-    private static void testToMapWithBinaryOperatorAndSupplier() {
+   /* private static void testToMapWithBinaryOperatorAndSupplier() {
         System.out.println("testToMapWithBinaryOperatorAndSupplier");
         Optional.of(menu.stream()
                 .collect(Collectors.toMap(Dish::getType, v -> 1L, (a, b) -> a + b, Hashtable::new)))
@@ -173,6 +173,6 @@ public class CollectorsAction4 {
                     System.out.println(v);
                     System.out.println(v.getClass());
                 });
-    }
+    }*/
 
 }
