@@ -24,21 +24,21 @@ public class CollectorsAction {
             new Dish("salmon", false, 450, Dish.Type.FISH));
 
     public static void main(String[] args) {
-        testAveragingDouble();
-        testAveragingInt();
-        testCollectingAndThen();
+       // testAveragingDouble();
+       // testAveragingInt();
+       // testCollectingAndThen();
         //统计
         testCounting();
         //分组
-        testGroupingByFunction();
+       // testGroupingByFunction();
         //分组后，求平均值
-        testGroupingByFunctionAndCollector();
+        //testGroupingByFunctionAndCollector();
         //各种聚合函数的方法
-        testSummarizingInt();
+        //testSummarizingInt();
         //根据类型分组
-        testGroupingByConcurrentWithFunction();
+        //testGroupingByConcurrentWithFunction();
         //根据类型分组，且求平均值
-        testGroupingByConcurrentWithFunctionAndCollector();
+       // testGroupingByConcurrentWithFunctionAndCollector();
         //名字连接
         testJoining();
         //名字连接加分隔符
@@ -46,7 +46,7 @@ public class CollectorsAction {
         //在整体前面加前缀后缀
         testJoiningWithDelimiterAndPrefixAndSuffix();
         //取最大的object
-        testMaxBy();
+        //testMaxBy();
 
     }
     //转换成double
