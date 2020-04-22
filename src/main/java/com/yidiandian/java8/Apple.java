@@ -22,6 +22,6 @@ public class Apple implements Serializable {
     /**
      * 重量
      */
-    private long weight;
+    private int weight;
 
 }

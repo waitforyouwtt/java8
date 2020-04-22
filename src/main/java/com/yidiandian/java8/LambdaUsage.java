@@ -27,7 +27,7 @@ public class LambdaUsage {
         }
         return result;
     }
-    private static List<Apple> filterByBiPredicate(List<Apple> source, BiPredicate<String, Long> predicate) {
+    private static List<Apple> filterByBiPredicate(List<Apple> source, BiPredicate<String,Integer> predicate) {
         List<Apple> result = new ArrayList<>();
         for (Apple a : source) {
             if (predicate.test(a.getColor(), a.getWeight()))
