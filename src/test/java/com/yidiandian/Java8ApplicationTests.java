@@ -12,6 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -19,7 +20,7 @@ import static java.util.stream.Collectors.groupingBy;
 public class Java8ApplicationTests {
 
     static List<Apple> appleList = Arrays.asList(
-              new Apple("green", 150)
+              new Apple("green", 170)
             , new Apple("green", 150)
             , new Apple("yellow", 150)
            /* , new Apple("green", 170)
@@ -51,10 +52,14 @@ public class Java8ApplicationTests {
 
         ConcurrentMap<String, List<Apple>> groupList = appleList.stream().collect( Collectors.groupingByConcurrent( Apple::getColor ) );
         log.info( "集合按照某一属性分组，并且每组都有哪些集合：{}",groupList );
+
         ConcurrentMap<String, Double> groupAfterAvg2 = appleList.stream().collect( Collectors.groupingByConcurrent( Apple::getColor, Collectors.averagingInt( Apple::getWeight ) ) );
         log.info( "集合按照某一属性分组，且求平均值：{}",groupAfterAvg2 );
         ConcurrentSkipListMap<String, Double> groupAfterAvg3 = appleList.stream().collect( Collectors.groupingByConcurrent( Apple::getColor, ConcurrentSkipListMap::new, Collectors.averagingInt( Apple::getWeight ) ) );
         log.info( "集合按照某一属性分组，且求平均值：{}",groupAfterAvg3 );
+        Map<String, Double> groupAfterAvg4 = appleList.stream().collect(Collectors.groupingBy(Apple::getColor, Collectors.averagingInt(Apple::getWeight)));
+        log.info( "集合按照某一属性分组，且求平均值：{}",groupAfterAvg4 );
+
         String join = appleList.stream().map( Apple::getColor ).collect( Collectors.joining() );
         log.info( "集合按照某一属性直接拼接：{}",join );
         String join1 = appleList.stream().map(Apple::getColor).collect(Collectors.joining(","));
@@ -65,6 +70,15 @@ public class Java8ApplicationTests {
         log.info( "集合按照某一属性按照逗号拼接：{}",join3 );
         Optional<Apple> filterMax = appleList.stream().collect( Collectors.maxBy( Comparator.comparingInt( Apple::getWeight ) ) );
         log.info( "集合按照某一属性取得最大值：{}",filterMax );
+        Optional<Apple> maxfileter = appleList.stream().collect(Collectors.maxBy(Comparator.comparing(Apple:: getWeight )));
+        log.info("筛选集合中重量最大的：{}",maxfileter);
+        List<String> strings = appleList.stream().map(Apple::getColor).collect(Collectors.toList());
+        log.info("集合中的某一列：{}",strings);
+        //集合按照某列反转排序
+        appleList.sort(Comparator.comparing(Apple::getWeight).reversed());
+        Integer listSize = appleList.stream().collect(Collectors.collectingAndThen(toList(), t -> t.size()));
+        log.info("获取集合的size：{}",listSize);
+
 
     }
 
@@ -76,6 +90,33 @@ public class Java8ApplicationTests {
         String reverseStr = Joiner.on(" ").join( list );
         log.info("反转字符串得到的结果：{}",reverseStr);
 
+    }
+
+    @Test
+    public void mapIteratorTest(){
+        Map<String, List<Apple>> collect = appleList.stream().collect(Collectors.groupingBy(Apple::getColor));
+        collect.forEach((k,v)->{
+            if (k.equals("yellow")){
+                log.info("得到的K:{}",k);
+                return;
+            }
+            log.info("跳出循环吗？？？");
+        });
+    }
+
+    /**
+     * 根据某字段进行分组,取出每一组中最大的值
+     */
+    @Test
+    public void arrayGroupByFiledFilterMaxTest() {
+        Map<String, List<Apple>> map = appleList.stream().collect(groupingBy(Apple::getColor));
+        map.forEach((k, v) -> {
+            Optional<Apple> collect = v.stream().collect(Collectors.maxBy(Comparator.comparing(Apple::getWeight)));
+            if (collect.isPresent()) {
+                Apple phone = collect.get();
+                log.info("查找一组数据中最大的值:{}", phone);
+            }
+        });
     }
 
 }
